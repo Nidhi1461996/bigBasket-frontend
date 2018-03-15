@@ -1,0 +1,13 @@
+.HeaderClass {
+    color: black;
+    font-weight: bolder;
+    font-size: 26px;
+    text-align: left;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+}

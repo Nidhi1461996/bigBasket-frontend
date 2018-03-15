@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  
+}
+
+.Header {
+  flex-grow: 0.001;
+  width:100%;
+
+}
+
+.Body {
+  background-color:#05092f;
+  flex-grow: 10;
+}

@@ -10,6 +10,7 @@
     min-width: 200px;
     min-height: 400px;
     background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid black;
   }
   
   @media (min-width: 400px) {
@@ -33,7 +34,6 @@
   }
   .card .card-summary {
     padding: 5% 5% 3% 5%;
-    
   }
   .card .card-header {
     position: relative;
@@ -76,11 +76,16 @@ button{
   }
   
   body {
-    background: #f0f0f0;
+    background:white;
     font-size: 17px;
     line-height: 1.4;
     font-family: 'Jaldi', sans-serif;
   }
   .highlight{
     background: yellow;
+  }
+  
+  .card .sold-out {
+    padding: 5% 5% 3% 5%;
+    background:green;
   }

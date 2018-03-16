@@ -52,3 +52,20 @@ td:before {
  content: attr(data-title);
  }
 }
+.checkout{
+    border: 1px solid black;
+    padding:75px;
+    float:right;
+    margin-top: 50px;
+    margin-right: 25px;
+    background: linear-gradient(white, rgba(169, 169, 169, 0.461));
+}
+.total{
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+}
+.checkout-button{
+    background: lightsalmon;
+    padding:15px;
+    border-radius: 3px;
+}

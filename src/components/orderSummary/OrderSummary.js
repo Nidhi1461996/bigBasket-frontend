@@ -45,12 +45,13 @@ class OrderSummary extends Component {
     const categories = Object.keys(this.props.orderItems);
     for (let i = 0; i < categories.length; i += 1) {
       const orderRow = [];
-      const categoryRow = [<tr className="sub-heading">
-        <td>{categories[i]}</td>
-        <td />
-        <td />
-        <td />
-                           </tr>];
+      const categoryRow = [
+        <tr className="sub-heading">
+          <td>{categories[i]}</td>
+          <td />
+          <td />
+          <td />
+        </tr>];
       this.props.orderItems[categories[i]].forEach((order) => {
         tot += order.tot;
         orderRow.push(<tr>
@@ -110,8 +111,7 @@ class OrderSummary extends Component {
       data: {
         orderDetails: Object.values(this.props.orderItems),
       },
-    });
-    this.props.setPage('pastOrders');
+    }).then(() => { this.props.setPage('pastOrders'); });
   }
   render() {
     console.log(Object.values(this.props.orderItems), 'here');
@@ -129,8 +129,13 @@ class OrderSummary extends Component {
           {this.state.final}
           <tbody />
         </table>
-        {this.state.tot}
-        <button onClick={() => this.checkout()}>CHECKOUT</button>
+        <div className="checkout">
+          <div className="total">
+            TOTAL :   {this.state.tot}
+          </div>
+          <button className="checkout-button" onClick={() => this.checkout()}>CHECKOUT -></button>
+
+        </div>
       </div>
 
     );

@@ -9,7 +9,7 @@ class Header extends Component {
   render() {
     return (
       <div className="HeaderClass" >
-        <div>E-shopper</div>
+        <div onClick={() => this.props.setPage('main')}>E-shopper</div>
         <div> <button onClick={() => this.setThePage()} disabled={this.props.flag}>My basket</button> <br />{this.props.number} items  </div>
       </div>
 

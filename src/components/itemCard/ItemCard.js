@@ -8,13 +8,14 @@ class ItemCardsContainer extends Component {
     quantity: 0,
     orderItems: [],
     class: '',
+    stock: 'card-summary',
   }
   increment = () => {
     // console.log(this.props.availableQuantity);
     if (this.state.quantity + 1 > this.props.availableQuantity) {
-      alert('Out of stock');
       this.setState({
         quantity: this.props.availableQuantity,
+        stock: 'sold-out',
       });
     } else {
       const total = (this.props.cost) * (this.state.quantity + 1);
@@ -34,6 +35,7 @@ class ItemCardsContainer extends Component {
       if (this.state.quantity + 1 >= 1) {
         this.setState({
           class: 'highlight',
+          stock: 'card-summary',
         });
       }
     }
@@ -43,12 +45,14 @@ class ItemCardsContainer extends Component {
     if (this.state.quantity - 1 === 0) {
       this.setState({
         class: '',
+        stock: 'card-summary',
       });
     }
     if (this.state.quantity === 0) {
       this.setState({
         quantity: 0,
         class: '',
+        stock: 'card-summary',
       });
     } else {
       const total = (this.props.cost) * (this.state.quantity - 1);
@@ -65,6 +69,7 @@ class ItemCardsContainer extends Component {
 
       this.setState({
         quantity: this.state.quantity - 1,
+        stock: 'card-summary',
       });
       this.props.decrementQuantity(this.props.basket - 1);
     }
@@ -75,13 +80,13 @@ class ItemCardsContainer extends Component {
       <div>
         <div className="card">
           <span className="card-header">
-            <img src={this.props.imageUrl} alt="Product image" />
+            <img src={this.props.imageUrl} alt="" />
             <span className="card-title">
               <p>{this.props.brand}</p>
               <h3>{this.props.title}</h3>
             </span>
           </span>
-          <span className="card-summary">
+          <span className={this.state.stock}>
             <div>Rs.{this.props.cost}</div>
             <div>{this.props.description}</div>
             <div>

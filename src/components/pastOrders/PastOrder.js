@@ -34,7 +34,7 @@ class Orders extends Component {
           <td>AMOUNT</td>
                      </tr>);
         const body = [];
-        body.push(<tr className="item-detail"><td>ITEM DESCRIPTION</td><td>QUANTITY</td><td>DATE</td><td>SUBTOTAL</td></tr>);
+        body.push(<tr className="item-detail"><td>ITEM ID</td><td>QUANTITY</td><td>DATE</td><td>SUBTOTAL</td></tr>);
         this.state.orders[i].orderDetails.forEach((order) => {
           body.push(<tr><td>{order.itemId}</td>
             <td>{order.quantity}</td>

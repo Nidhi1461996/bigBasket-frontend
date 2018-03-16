@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Header from './components/header/Header';
 import InventoryContainer from './components/inventoryContainer/InventoryContainer';
 import OrderSummary from './components/orderSummary/OrderSummary';
+import Order from './components/pastOrders/PastOrder';
+import { dispatchDecrementAction } from './redux/actions';
+
 import './App.css';
 
 
@@ -12,6 +16,7 @@ class App extends Component {
     categories: [],
     orderItems: {},
     page: 'main',
+
   }
   componentWillMount() {
     axios({
@@ -33,6 +38,7 @@ class App extends Component {
     });
   }
   setOrderItems = (inputItem, category) => {
+    console.log(inputItem, 'input item');
     let flag = 0;
     const orderItems1 = this.state.orderItems;
     if (this.state.orderItems[category] === undefined) {
@@ -50,6 +56,7 @@ class App extends Component {
         neworderItems.push(inputItem);
       }
       let ind = -1;
+
       for (let i = 0; i < neworderItems.length; i += 1) {
         if (neworderItems[i].quantity === 0) {
           ind = i;
@@ -64,11 +71,11 @@ class App extends Component {
       orderItems1[category] = neworderItems;
       this.setState({
         orderItems: orderItems1,
+
       });
     }
   }
   deleteElem = (title, category) => {
-    console.log(title, category);
     let ind = -1;
     const orderItems1 = this.state.orderItems;
     const neworderitems = this.state.orderItems[category];
@@ -77,19 +84,21 @@ class App extends Component {
         ind = i;
       }
     }
+    this.props.decrementAction(this.props.basket - neworderitems[ind].quantity);
     if (ind !== -1) {
       neworderitems.splice(ind, 1);
       orderItems1[category] = neworderitems;
     }
     this.setState({
       orderItems: orderItems1,
+
     });
   }
   render() {
     if (this.state.page === 'main') {
       return (
         <div className="App">
-          <Header setPage={this.setPage} />
+          <Header setPage={this.setPage} flag={false} />
           <InventoryContainer
             inventory={this.state.inventory}
             categories={this.state.categories}
@@ -99,18 +108,32 @@ class App extends Component {
 
         </div>
       );
+    } else if (this.state.page === 'pastOrders') {
+      return (
+        <div className="App">
+          <Header setPage={this.setPage} flag />
+          <Order />
+        </div>
+      );
     }
 
     return (
       <div className="App">
-        <Header setPage={this.setPage} />
+        <Header setPage={this.setPage} flag />
         <OrderSummary
           orderItems={this.state.orderItems}
           deleteElem={this.deleteElem}
+          setPage={this.setPage}
         />
       </div>
     );
   }
 }
+const mapStatesToProps = state => ({
+  basket: state.basket,
+});
+const mapDispatchToProps = dispatch => ({
+  decrementAction: score => dispatch(dispatchDecrementAction(score)),
 
-export default App;
+});
+export default connect(mapStatesToProps, mapDispatchToProps)(App);

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import './orderSummary.css';
 
 
 class OrderSummary extends Component {
   state = {
     final: [],
+    tot: 0,
   };
   // constructor(props) {
   //   super(props);
@@ -38,18 +40,25 @@ class OrderSummary extends Component {
   //   });
   // }
   componentDidMount() {
+    let tot = 0;
     const final = [];
     const categories = Object.keys(this.props.orderItems);
     for (let i = 0; i < categories.length; i += 1) {
       const orderRow = [];
-      const categoryRow = [<th><td>{categories[i]}</td></th>];
+      const categoryRow = [<tr className="sub-heading">
+        <td>{categories[i]}</td>
+        <td />
+        <td />
+        <td />
+                           </tr>];
       this.props.orderItems[categories[i]].forEach((order) => {
+        tot += order.tot;
         orderRow.push(<tr>
           <td>{order.title}</td>
           <td>{order.cost}</td>
           <td>{order.quantity}</td>
           <td>Rs.{order.tot}<button onClick={() => this.deleteButtonClick(order.title, categories[i])}>x</button></td>
-        </tr>);
+                      </tr >);
       });
 
       final.push(categoryRow);
@@ -57,17 +66,25 @@ class OrderSummary extends Component {
     }
     this.setState({
       final,
+      tot,
     });
   }
 
   deleteButtonClick = (title, category) => {
+    let tot = 0;
     this.props.deleteElem(title, category);
     const final = [];
     const categories = Object.keys(this.props.orderItems);
     for (let i = 0; i < categories.length; i += 1) {
       const orderRow = [];
-      const categoryRow = [<th><td>{categories[i]}</td></th>];
+      const categoryRow = [<tr className="sub-heading">
+        <td>{categories[i]}</td>
+        <td />
+        <td />
+        <td />
+                           </tr>];
       this.props.orderItems[categories[i]].forEach((order) => {
+        tot += order.tot;
         orderRow.push(<tr>
           <td>{order.title}</td>
           <td>{order.cost}</td>
@@ -75,7 +92,7 @@ class OrderSummary extends Component {
           <td>Rs.{order.tot}
             <button onClick={() => this.deleteButtonClick(order.title, categories[i])}>x</button>
           </td>
-        </tr>);
+                      </tr >);
       });
 
       final.push(categoryRow);
@@ -83,25 +100,37 @@ class OrderSummary extends Component {
     }
     this.setState({
       final,
+      tot,
     });
   }
-
+  checkout = () => {
+    axios({
+      method: 'POST',
+      url: '/checkout',
+      data: {
+        orderDetails: Object.values(this.props.orderItems),
+      },
+    });
+    this.props.setPage('pastOrders');
+  }
   render() {
-    console.log(this.props.orderItems, 'here');
+    console.log(Object.values(this.props.orderItems), 'here');
     return (
       <div>
         <table>
-          <thead>
-            <tr>
-              <td>ITEM DESCRIPTION</td>
-              <td>UNIT PRICE</td>
-              <td>QUANTITY</td>
-              <td>SUBTOTAL</td>
-            </tr>
-          </thead>
+
+          <tr>
+            <td>ITEM DESCRIPTION</td>
+            <td>UNIT PRICE</td>
+            <td>QUANTITY</td>
+            <td>SUBTOTAL</td>
+          </tr>
+
           {this.state.final}
           <tbody />
         </table>
+        {this.state.tot}
+        <button onClick={() => this.checkout()}>CHECKOUT</button>
       </div>
 
     );

@@ -7,6 +7,7 @@ class ItemCardsContainer extends Component {
   state = {
     quantity: 0,
     orderItems: [],
+    class: '',
   }
   increment = () => {
     // console.log(this.props.availableQuantity);
@@ -18,6 +19,7 @@ class ItemCardsContainer extends Component {
     } else {
       const total = (this.props.cost) * (this.state.quantity + 1);
       const item = {
+        itemId: this.props.itemId,
         title: this.props.title,
         description: this.props.description,
         quantity: this.state.quantity + 1,
@@ -29,17 +31,29 @@ class ItemCardsContainer extends Component {
         quantity: this.state.quantity + 1,
       });
       this.props.incrementQuantity(this.props.basket + 1);
+      if (this.state.quantity + 1 >= 1) {
+        this.setState({
+          class: 'highlight',
+        });
+      }
     }
   }
 
   decrement = () => {
+    if (this.state.quantity - 1 === 0) {
+      this.setState({
+        class: '',
+      });
+    }
     if (this.state.quantity === 0) {
       this.setState({
         quantity: 0,
+        class: '',
       });
     } else {
       const total = (this.props.cost) * (this.state.quantity - 1);
       const item = {
+        itemId: this.props.itemId,
         title: this.props.title,
         description: this.props.description,
         quantity: this.state.quantity - 1,
@@ -71,7 +85,7 @@ class ItemCardsContainer extends Component {
             <div>Rs.{this.props.cost}</div>
             <div>{this.props.description}</div>
             <div>
-              <div><button onClick={() => this.decrement()}>-</button>
+              <div className={this.state.class}><button onClick={() => this.decrement()}>-</button>
                 {this.state.quantity}
                 <button onClick={() => this.increment()}>+</button>
               </div>

@@ -14,16 +14,12 @@ table {
     width: 100%; 
     border-collapse: collapse; 
 }
-.sub-heading { 
-    color:red;
-    font-weight: bold; 
-    background: rgb(0, 166, 255);
-}
+
 td { 
     line-height: 35px;
     vertical-align: middle; 
     border-bottom: 1px solid #000; 
-    text-align: left; 
+    text-align: center; 
 }
 
 @media screen and (max-width: 150px){
@@ -51,4 +47,10 @@ td:before {
  white-space: nowrap;
  content: attr(data-title);
  }
+}
+.table-title{
+    background: gray;
+}
+.item-detail{
+background: #00bbff;
 }

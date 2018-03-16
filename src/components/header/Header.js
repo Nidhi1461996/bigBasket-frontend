@@ -10,7 +10,7 @@ class Header extends Component {
     return (
       <div className="HeaderClass" >
         <div>E-shopper</div>
-        <div> <button onClick={() => this.setThePage()}>My basket</button> <br />{this.props.number} items  </div>
+        <div> <button onClick={() => this.setThePage()} disabled={this.props.flag}>My basket</button> <br />{this.props.number} items  </div>
       </div>
 
     );

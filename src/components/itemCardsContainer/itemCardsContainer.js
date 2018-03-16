@@ -5,6 +5,7 @@ import ItemCard from '../itemCard/ItemCard';
 class ItemCardsContainer extends Component {
   render() {
     const itemCards = this.props.inventory.map((itemCard, index) => (<ItemCard
+      itemId={itemCard.id}
       title={itemCard.title}
       description={itemCard.description}
       cost={itemCard.cost}
